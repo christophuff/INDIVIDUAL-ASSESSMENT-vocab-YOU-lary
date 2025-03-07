@@ -1,0 +1,18 @@
+{
+  "-MiBsknNSQ6aBG1-2lQS": {
+    "firebaseKey": "-MiBsknNSQ6aBG1-2lQS",
+    "language_id": "-MiBsknNSQ6aBG1-2lLNG",
+    "title": "Example Word",
+    "definition": "This is an example definition.",
+    "time_submitted": "2025-03-07T12:00:00Z",
+    "uid": ""
+  },
+  "-MiBsknNSQ6aBG1-2lQT": {
+    "firebaseKey": "-MiBsknNSQ6aBG1-2lQT",
+    "language_id": "-MiBsknNSQ6aBG1-2lLNG2",
+    "title": "Hola",
+    "definition": "A Spanish greeting meaning 'Hello'.",
+    "time_submitted": "2025-03-07T12:30:00Z",
+    "uid": ""
+  }
+}
