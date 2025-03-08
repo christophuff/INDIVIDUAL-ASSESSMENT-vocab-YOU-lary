@@ -3,8 +3,67 @@
 
 
 body {
-  background-color: antiquewhite;
-  color: brown;
+  background-color: #333;;
+  color: white;
   text-align: center;
   margin-top: 100px;
+}
+
+#search {
+  width: 200px;
+  margin: 0 10px;
+}
+
+.logo-span {
+  color: red;
+}
+
+.word-card {
+  width: 18rem;
+  height: 18rem;
+  margin: 10px;
+  background: #ffc;
+  color: #000;
+  box-shadow: 5px 5px 7px black;
+}
+
+.word-details {
+  position: absolute;
+  bottom: 20%;
+  left: 15%;
+  right: 15%;
+  margin-bottom: 10px;
+
+  p {
+    font-size: 12px;
+    margin: 5px;
+  }
+}
+
+.btn-container {
+  position: absolute;
+  bottom: 0;
+  left: 33%;
+  right: 33%;
+  margin-bottom: 20px;
+}
+
+.language-card {
+  width: 18rem;
+  margin: 10px;
+}
+
+#store {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.form-control {
+  margin-bottom: 10px;
 }
