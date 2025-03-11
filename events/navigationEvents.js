@@ -1,10 +1,13 @@
 // import firebase from 'firebase/app';
 import 'firebase/auth';
 import { signOut } from '../utils/auth';
-import { getWords } from '../api/wordData';
+import {
+  getPinnedWords, getWords, searchWords,
+} from '../api/wordData';
 import { getLanguages } from '../api/languageData';
 import { showWords } from '../pages/words';
 import { showLanguages, emptyLanguages } from '../pages/languages';
+import populateNavDropdown from '../components/shared/populateNavDropdown';
 
 const navigationEvents = () => {
   // LOGOUT BUTTON
@@ -14,6 +17,16 @@ const navigationEvents = () => {
   // GET ALL WORDS
   document.querySelector('#all-words').addEventListener('click', () => {
     getWords().then(showWords);
+  });
+
+  // GET PINNED WORDS
+  document.querySelector('#view-pinned').addEventListener('click', () => {
+    getPinnedWords().then(showWords);
+  });
+
+  // populate dropdown with languages
+  document.querySelector('#wordFilterDropdown').addEventListener('click', () => {
+    populateNavDropdown();
   });
 
   // GET LANGUAGES
@@ -26,6 +39,11 @@ const navigationEvents = () => {
         showLanguages(languages); // Display Languages
       }
     }).catch((error) => console.error('Error fetching authors:', error));
+  });
+
+  // Search Words
+  document.querySelector('#search').addEventListener('keyup', (e) => {
+    searchWords(e).then(showWords);
   });
 };
 

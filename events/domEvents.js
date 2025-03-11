@@ -1,10 +1,13 @@
-import { getSingleWord, getWords, deleteWord } from '../api/wordData';
+import {
+  getSingleWord, getWords, deleteWord, togglePinned
+} from '../api/wordData';
 import { getSingleLanguage, getLanguages } from '../api/languageData';
-import { deleteLanguageWordsRelationship } from '../api/mergedData';
+import { deleteLanguageWordsRelationship, getLanguageDetails } from '../api/mergedData';
 import addWordForm from '../components/forms/addWordForm';
 import addLanguageForm from '../components/forms/addLanguageForm';
 import { showWords } from '../pages/words';
 import { showLanguages } from '../pages/languages';
+import viewLanguage from '../pages/viewLanguages';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -56,6 +59,26 @@ const domEvents = () => {
           getLanguages().then(showLanguages);
         });
       }
+    }
+
+    // Event Listener to view words of specific Language
+    if (e.target.id.includes('view-language-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+
+      getLanguageDetails(firebaseKey).then(viewLanguage);
+    }
+
+    // Event Listener for toggling pinned word status
+    if (e.target.id.includes('toggle-pinned')) {
+      const [, firebaseKey] = e.target.id.split('--');
+
+      // Check to see whether word is already pinned
+      const isCurrentlyPinned = e.target.classList.contains('fa-thumbtack');
+
+      togglePinned(firebaseKey, isCurrentlyPinned).then(() => {
+        e.target.classList.toggle('fa-thumbtack');
+        e.target.classList.toggle('fa-thumbtack-slash');
+      });
     }
   });
 };

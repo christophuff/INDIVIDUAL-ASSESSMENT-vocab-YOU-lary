@@ -16,6 +16,14 @@ const navBar = () => {
             <li class="nav-item">
               <a class="nav-link" href="#" id="all-languages">Languages</a>
             </li>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" id="wordFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">Filter Words</button>
+              <ul class="dropdown-menu" id="dropdown-options">
+                <li><a class="dropdown-item" id="view-pinned">📌 Pinned Words</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li id="select-language-dropdown"></li>
+              </ul>
+            </div>
           </ul>
           <input
               class="form-control mr-sm-2"

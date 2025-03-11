@@ -18,7 +18,10 @@ const showWords = (array) => {
     domString += `
         <div class="card word-card">
           <div class="card-body">
-            <h5 class="card-title">${wordDetails.word}</h5>
+            <h5 class="card-title">
+            ${wordDetails.word}
+            <i id="toggle-pinned--${wordDetails.firebaseKey}" class="fa-solid ${wordDetails.pinned ? 'fa-thumbtack' : 'fa-thumbtack-slash'}"></i>
+            </h5>
             <p class="card-text bold">${wordDetails.definition}</p>
             <hr>
             <div class="word-details">

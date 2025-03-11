@@ -12,7 +12,7 @@ const getWordDetails = (firebaseKey) => new Promise((resolve, reject) => {
 const getLanguageDetails = (firebaseKey) => new Promise((resolve, reject) => {
   getSingleLanguage(firebaseKey).then((languageObject) => {
     getLanguageWords(firebaseKey).then((wordsArray) => {
-      resolve({ ...languageObject, books: wordsArray });
+      resolve({ ...languageObject, words: wordsArray });
     }).catch(reject);
   });
 });
