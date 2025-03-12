@@ -3,15 +3,21 @@ import client from '../utils/client';
 const endpoint = client.databaseURL;
 
 // GET ALL WORDS
-const getWords = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/words.json`, {
+const getWords = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/words.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
     .catch(reject);
 });
 
@@ -29,15 +35,18 @@ const getSingleWord = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // GET pinned words
-const getPinnedWords = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/words.json?orderBy="pinned"&equalTo=true`, {
+const getPinnedWords = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/words.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
+    .then((data) => {
+      const isPinned = Object.values(data).filter((item) => item.pinned);
+      resolve(isPinned);
+    })
     .catch(reject);
 });
 
@@ -111,10 +120,10 @@ const togglePinned = (firebaseKey, currentStatus) => new Promise((resolve, rejec
 });
 
 // Search Words
-const searchWords = (e) => new Promise((resolve, reject) => {
+const searchWords = (e, uid) => new Promise((resolve, reject) => {
   const userInput = e.target.value.toLowerCase();
 
-  fetch(`${endpoint}/words.json`, {
+  fetch(`${endpoint}/words.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

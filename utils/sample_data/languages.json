@@ -2,11 +2,13 @@
   "-MiBsknNSQ6aBG1-2lLNG": {
     "firebaseKey": "-MiBsknNSQ6aBG1-2lLNG",
     "language": "English",
-    "description": "The English language originated from Germanic dialects brought to Britain by Anglo-Saxon migrants in the 5th century. The language has been influenced by many other cultures and languages over the centuries. "
+    "description": "The English language originated from Germanic dialects brought to Britain by Anglo-Saxon migrants in the 5th century. The language has been influenced by many other cultures and languages over the centuries. ", 
+    "uid": ""
   },
   "-MiBsknNSQ6aBG1-2lLNG2": {
     "firebaseKey": "-MiBsknNSQ6aBG1-2lLNG2",
     "language": "Spanish",
-    "description": "The Spanish language originated in the Iberian Peninsula, which is now Spain, Portugal, and part of France. It evolved from Vulgar Latin, a spoken form of Latin that was brought to the region by the Romans. "
+    "description": "The Spanish language originated in the Iberian Peninsula, which is now Spain, Portugal, and part of France. It evolved from Vulgar Latin, a spoken form of Latin that was brought to the region by the Romans. ",
+    "uid": ""
   }
 }

@@ -1,5 +1,5 @@
 import 'firebase/auth';
-// import firebase from 'firebase';
+import firebase from 'firebase';
 import { getWords, createWord, updateWord } from '../api/wordData';
 import { showWords } from '../pages/words';
 import { getLanguages, createLanguage, updateLanguage } from '../api/languageData';
@@ -9,20 +9,23 @@ const formEvents = () => {
   document.querySelector('#main-container').addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Adding a Book
+    // Adding a Word
     if (e.target.id.includes('submit-word')) {
-      const payload = {
-        word: document.querySelector('#word').value,
-        definition: document.querySelector('#definition').value,
-        language_id: document.querySelector('#language_id').value,
-        time_submitted: new Date().toISOString(),
-      };
+      firebase.auth().onAuthStateChanged((user) => {
+        const payload = {
+          uid: user.uid,
+          word: document.querySelector('#word').value,
+          definition: document.querySelector('#definition').value,
+          language_id: document.querySelector('#language_id').value,
+          time_submitted: new Date().toISOString(),
+        };
 
-      createWord(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
+        createWord(payload).then(({ name }) => {
+          const patchPayload = { firebaseKey: name };
 
-        updateWord(patchPayload).then(() => {
-          getWords().then(showWords);
+          updateWord(patchPayload).then(() => {
+            getWords(user.uid).then(showWords);
+          });
         });
       });
     }
@@ -38,22 +41,27 @@ const formEvents = () => {
       };
 
       updateWord(payload).then(() => {
-        getWords().then(showWords);
+        firebase.auth().onAuthStateChanged((user) => {
+          getWords(user.uid).then(showWords);
+        });
       });
     }
 
     // Adding a Language
     if (e.target.id.includes('submit-language')) {
-      const payload = {
-        language: document.querySelector('#language').value,
-        description: document.querySelector('#description').value,
-      };
+      firebase.auth().onAuthStateChanged((user) => {
+        const payload = {
+          uid: user.uid,
+          language: document.querySelector('#language').value,
+          description: document.querySelector('#description').value,
+        };
 
-      createLanguage(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
+        createLanguage(payload).then(({ name }) => {
+          const patchPayload = { ...payload, firebaseKey: name };
 
-        updateLanguage(patchPayload).then(() => {
-          getLanguages().then(showLanguages);
+          updateLanguage(patchPayload).then(() => {
+            getLanguages(user.uid).then(showLanguages);
+          });
         });
       });
     }
@@ -67,7 +75,9 @@ const formEvents = () => {
       };
 
       updateLanguage(payload).then(() => {
-        getLanguages().then(showLanguages);
+        firebase.auth().onAuthStateChanged((user) => {
+          getLanguages(user.uid).then(showLanguages);
+        });
       });
     }
   });

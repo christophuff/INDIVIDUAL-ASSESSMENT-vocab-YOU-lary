@@ -28,7 +28,7 @@ const viewLanguage = (obj) => {
             </div>
             </div>
           </div>
-        `).join('') : '<p>No books found for this author.</p>'}
+        `).join('') : '<p>No Words found for this Language.</p>'}
       </div>
       </div>
     `;

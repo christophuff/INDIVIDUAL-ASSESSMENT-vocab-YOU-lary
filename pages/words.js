@@ -3,7 +3,14 @@ import renderToDOM from '../utils/renderToDom';
 import { getWordDetails } from '../api/mergedData';
 
 const emptyWords = () => {
-  const domString = '<h1>No Books</h1>';
+  const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-word-btn">New Word</button>';
+  renderToDOM('#add-button', btnString);
+
+  const domString = `
+  <div class="get-started">
+    <h3>No words saved yet! Head over to the Languages tab to get started!</h3>
+  </div>
+  `;
   renderToDOM('#store', domString);
 };
 
@@ -23,7 +30,6 @@ const showWords = (array) => {
             <i id="toggle-pinned--${wordDetails.firebaseKey}" class="fa-solid ${wordDetails.pinned ? 'fa-thumbtack' : 'fa-thumbtack-slash'}"></i>
             </h5>
             <p class="card-text bold">${wordDetails.definition}</p>
-            <hr>
             <div class="word-details">
               <p><strong>Submitted:</strong> ${new Date(wordDetails.time_submitted).toLocaleString('en-US')}</p>
               <p><strong>Language:</strong> ${wordDetails.languageObject.language}</p>

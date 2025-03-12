@@ -78,13 +78,31 @@ body {
 
 .language-card {
   width: 18rem;
+  height: 24rem;
   margin: 10px;
+
+  .language-details {
+    position: absolute;
+    bottom: 5%;
+    left: 15%;
+    right: 15%;
+  }
+
+  .card-text {
+    overflow: scroll;
+    scrollbar-color: #49C6E5;
+    height: 14rem;
+  }
 }
 
 #store {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
+  .get-started {
+    width: 80%;
+  }
 }
 
 form {

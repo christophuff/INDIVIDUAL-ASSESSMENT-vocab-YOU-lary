@@ -6,17 +6,25 @@ import formEvents from '../events/formEvents';
 import navigationEvents from '../events/navigationEvents';
 // GET WORDS AND SHOW WORDS
 import { getWords } from '../api/wordData';
-import { showWords } from '../pages/words';
+import { emptyWords, showWords } from '../pages/words';
 
-const startApp = () => {
-  domBuilder(); // BUILD THE DOM
-  // TODO: Put all words on the DOM on App load
-  getWords().then((words) => showWords(words));
-  domEvents(); // ADD THE EVENT LISTENTERS TO THE DOM
-  formEvents(); // ADD FORM EVENT LISTENTERS TO THE DOM
-  navBar(); // DYNAMICALLY ADD THE NAV
+const startApp = (user) => {
+  domBuilder(user); // BUILD THE DOM
+  domEvents(user); // ADD THE EVENT LISTENTERS TO THE DOM
+  formEvents(user); // ADD FORM EVENT LISTENTERS TO THE DOM
+  navBar(user); // DYNAMICALLY ADD THE NAV
   logoutButton(); // ADD THE LOGOUT BUTTON COMPONENT
   navigationEvents(); // ATTACH THE EVENT LISTENERS TO THE NAVBAR
+
+  // TODO: Put all words on the DOM on App load
+  getWords(user.uid).then((response) => {
+    const words = response ? Object.values(response) : []; // Convert response to an array
+    if (words.length === 0) {
+      emptyWords(); // Show "No Words" message if list is empty
+    } else {
+      showWords(user.uid); // Display Words
+    }
+  }).catch((error) => console.error('Error fetching words:', error));
 };
 
 export default startApp;
