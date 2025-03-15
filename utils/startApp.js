@@ -22,7 +22,7 @@ const startApp = (user) => {
     if (words.length === 0) {
       emptyWords(); // Show "No Words" message if list is empty
     } else {
-      showWords(user.uid); // Display Words
+      showWords(words); // Display Words
     }
   }).catch((error) => console.error('Error fetching words:', error));
 };

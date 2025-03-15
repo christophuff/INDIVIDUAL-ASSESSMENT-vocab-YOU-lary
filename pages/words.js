@@ -3,7 +3,7 @@ import renderToDOM from '../utils/renderToDom';
 import { getWordDetails } from '../api/mergedData';
 
 const emptyWords = () => {
-  const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-word-btn">New Word</button>';
+  const btnString = '<button class="note-stack-btn" id="add-word-btn">New Word</button>';
   renderToDOM('#add-button', btnString);
 
   const domString = `
@@ -16,18 +16,26 @@ const emptyWords = () => {
 
 const showWords = (array) => {
   clearDom();
-
-  const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-word-btn">New Word</button>';
+  const btnString = '<button class="note-stack-btn" id="add-word-btn">New Word</button>';
   renderToDOM('#add-button', btnString);
 
-  let domString = '';
-  const wordPromises = array.map((item) => getWordDetails(item.firebaseKey).then((wordDetails) => {
-    domString += `
+  // Create an array of promises to fetch word details
+  const wordPromises = array.map((item) => getWordDetails(item.firebaseKey)
+    .then((wordDetails) => wordDetails)
+    .catch(() => null));
+
+  Promise.all(wordPromises).then((wordDetailsArray) => {
+    // Filter out any failed fetches
+    const validWords = wordDetailsArray.filter((word) => word !== null);
+
+    let domString = '';
+    validWords.forEach((wordDetails) => {
+      domString += `
         <div class="card word-card">
           <div class="card-body">
             <h5 class="card-title">
-            ${wordDetails.word}
-            <i id="toggle-pinned--${wordDetails.firebaseKey}" class="fa-solid ${wordDetails.pinned ? 'fa-thumbtack' : 'fa-thumbtack-slash'}"></i>
+              ${wordDetails.word}
+              <i id="toggle-pinned--${wordDetails.firebaseKey}" class="fa-solid ${wordDetails.pinned ? 'fa-thumbtack' : 'fa-thumbtack-slash'}"></i>
             </h5>
             <p class="card-text bold">${wordDetails.definition}</p>
             <div class="word-details">
@@ -40,10 +48,10 @@ const showWords = (array) => {
             </div>
           </div>
         </div>`;
-  }));
+    });
 
-  // Wait for all word details to be fetched, then render the DOM
-  Promise.all(wordPromises).then(() => renderToDOM('#store', domString));
+    renderToDOM('#store', domString);
+  });
 };
 
 export { showWords, emptyWords };

@@ -16,7 +16,7 @@ const addWordForm = (obj = {}) => {
         <textarea class="form-control" placeholder="Word Definition" id="definition" style="height: 100px">${obj.definition || ''}</textarea>
       </div>
       <div class="form-group" id="select-language"></div>      
-      <button type="submit" class="btn btn-primary">Submit Word</button>
+      <button type="submit" class="btn submit-btn">Submit Word</button>
     </form>`;
 
   renderToDOM('#form-container', domString);

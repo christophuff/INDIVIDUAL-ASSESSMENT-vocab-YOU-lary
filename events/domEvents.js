@@ -1,3 +1,5 @@
+import 'firebase/auth';
+import firebase from 'firebase';
 import {
   getSingleWord, getWords, deleteWord, togglePinned
 } from '../api/wordData';
@@ -30,8 +32,10 @@ const domEvents = () => {
         console.warn('CLICKED DELETE BOOK', e.target.id);
         const [, firebaseKey] = e.target.id.split('--');
 
-        deleteWord(firebaseKey).then(() => {
-          getWords().then(showWords);
+        firebase.auth().onAuthStateChanged((user) => {
+          deleteWord(firebaseKey).then(() => {
+            getWords(user.uid).then(showWords);
+          });
         });
       }
     }

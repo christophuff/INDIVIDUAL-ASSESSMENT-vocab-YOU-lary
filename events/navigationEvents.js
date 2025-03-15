@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { signOut } from '../utils/auth';
 import {
-  getPinnedWords, getWords, searchWords,
+  getPinnedWords, getWords, getWordsAlphabeticalOrder, getWordsNewest, getWordsOldest, searchWords,
 } from '../api/wordData';
 import { getLanguages } from '../api/languageData';
 import { emptyWords, showWords } from '../pages/words';
@@ -46,6 +46,27 @@ const navigationEvents = () => {
   document.querySelector('#view-pinned').addEventListener('click', () => {
     firebase.auth().onAuthStateChanged((user) => {
       getPinnedWords(user.uid).then(showWords);
+    });
+  });
+
+  // Filter Words by Alphabetical Order
+  document.querySelector('#view-alphabetical').addEventListener('click', () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      getWordsAlphabeticalOrder(user.uid).then(showWords);
+    });
+  });
+
+  // Filter Words by Newst
+  document.querySelector('#view-newest').addEventListener('click', () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      getWordsNewest(user.uid).then(showWords);
+    });
+  });
+
+  // Filter Words by Oldest
+  document.querySelector('#view-oldest').addEventListener('click', () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      getWordsOldest(user.uid).then(showWords);
     });
   });
 

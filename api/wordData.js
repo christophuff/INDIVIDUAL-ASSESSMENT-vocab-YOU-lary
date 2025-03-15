@@ -50,6 +50,65 @@ const getPinnedWords = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+// Sort Words by Alphabetical Order
+const getWordsAlphabeticalOrder = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/words.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const wordsArray = Object.values(data);
+        wordsArray.sort((a, b) => a.word.toLowerCase().localeCompare(b.word.toLowerCase(), 'ja-en'));
+        resolve(wordsArray);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+// Get words sorted by newest first
+const getWordsNewest = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/words.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data).sort((a, b) => new Date(b.time_submitted) - new Date(a.time_submitted)));
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+// GET words sorted by oldest first
+const getWordsOldest = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/words.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data).sort((a, b) => new Date(a.time_submitted) - new Date(b.time_submitted)));
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 // CREATE new word
 const createWord = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/words.json`, {
@@ -155,6 +214,9 @@ export {
   getSingleWord,
   getLanguageWords,
   getPinnedWords,
+  getWordsAlphabeticalOrder,
+  getWordsNewest,
+  getWordsOldest,
   createWord,
   updateWord,
   deleteWord,

@@ -13,7 +13,7 @@ const addLanguageForm = (obj = {}) => {
       <div class="form-group">
         <label for="Description">Description</label>
         <textarea class="form-control" placeholder="Language Description" id="description" style="height: 100px;" required>${obj.description || ''}</textarea>    
-      <button type="submit" class="btn btn-primary">${obj.firebaseKey ? 'Update' : 'Submit'} Language</button>
+      <button type="submit" class="btn submit-btn">${obj.firebaseKey ? 'Update' : 'Submit'} Language</button>
 
     </form>`;
 
